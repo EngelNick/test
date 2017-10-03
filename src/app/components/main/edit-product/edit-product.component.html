@@ -1,0 +1,61 @@
+<h2 class="text-muted" id="head">Edit product</h2>
+
+<div class="row show-hide-message" *ngIf="message">
+  <div [ngClass]="messageClass">
+    {{message}}
+  </div>
+</div>
+
+<form [formGroup]="form" (submit)="onEditSubmit()" *ngIf="product">
+
+  <div class="form-group">
+    <label for="url">Image URL</label>
+    <div [ngClass]="{'has-success': form.controls.url.valid, 'has-error': form.controls.url.errors }">
+      <input type="text" name="url" placeholder="*URL for image" class="form-control" autocomplete="off" formControlName="url" />
+      <ul class="help-block">
+        <li *ngIf="form.controls.url.errors?.required">Image URL required</li>
+        <li *ngIf="form.controls.url.errors?.maxlength || form.controls.url.errors?.minlength">URL length has to be no less than 10 but no more than 250</li>
+        <li *ngIf="form.controls.url.errors?.validateImage">Wrong image format</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <div [ngClass]="{'has-success': form.controls.title.valid, 'has-error': form.controls.title.errors }">
+      <input type="text" name="title" class="form-control" placeholder="*title" autocomplete="off" formControlName="title" />
+      <ul class="help-block">
+        <li *ngIf="form.controls.title.errors?.required">Title required</li>
+        <li *ngIf="form.controls.title.errors?.maxlength || form.controls.title.errors?.minlength">Title length has to be no less than 3 but no more than 50</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <div [ngClass]="{'has-success': form.controls.description.valid, 'has-error': form.controls.description.errors }">
+      <textarea name="description" placeholder="*Product description" class="form-control" autocomplete="off"
+        formControlName="description"></textarea>
+      <ul class="help-block">
+        <li *ngIf="form.controls.description.errors?.required">Description required</li>
+        <li *ngIf="form.controls.description.errors?.maxlength || form.controls.description.errors?.minlength">Description length has to be no less than 100 but no more than 2500</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price</label>
+    <div [ngClass]="{'has-success': form.controls.price.valid, 'has-error': form.controls.price.errors }">
+      <input type="number" name="price" placeholder="*Product price" class="form-control" autocomplete="off"
+        formControlName="price" />
+      <ul class="help-block">
+        <li *ngIf="form.controls.price.errors?.required">Price required</li>
+        <li *ngIf="form.controls.price.errors?.min">Price couldn't be less than 0</li>
+      </ul>
+    </div>
+  </div>
+
+  <button [disabled]="processing" type="button" name="button" (click)="goBack()" class="btn btn-warning">Back</button>
+  <button [disabled]="processing || !form.valid" type="submit" name="button" (click)="onEditSubmit()" class="btn btn-success">Edit</button>
+
+</form>

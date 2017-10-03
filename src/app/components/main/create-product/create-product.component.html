@@ -1,0 +1,73 @@
+<h2 class="text-muted" id="head">Product create</h2>
+
+<div class="row show-hide-message" *ngIf="message">
+  <div [ngClass]="messageClass">
+    {{message}}
+  </div>
+</div>
+
+<form [formGroup]="form" (submit)="onCreateSubmit()">
+
+  <div class="form-group">
+    <label for="product_name">Product name</label>
+    <div [ngClass]="{'has-success': form.controls.product_name.valid && form.controls.product_name.dirty, 'has-error': form.controls.product_name.dirty && form.controls.product_name.errors }">
+      <input type="text" name="product_name" placeholder="*product name to store it in localstorage" class="form-control" autocomplete="off" formControlName="product_name"
+      />
+      <ul class="help-block">
+        <li *ngIf="form.controls.product_name.dirty && form.controls.product_name.errors?.required">Product name required</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="url">Image URL</label>
+    <div [ngClass]="{'has-success': form.controls.url.valid && form.controls.url.dirty, 'has-error': form.controls.url.dirty && form.controls.url.errors }">
+      <input type="text" name="url" placeholder="*URL for image" class="form-control" autocomplete="off" formControlName="url"
+      />
+      <ul class="help-block">
+        <li *ngIf="form.controls.url.dirty && form.controls.url.errors?.required">Image URL required</li>
+        <li *ngIf="(form.controls.url.dirty && form.controls.url.errors?.maxlength) || (form.controls.url.dirty && form.controls.url.errors?.minlength)">URL length has to be no less than 10 but no more than 250</li>
+        <li *ngIf="form.controls.url.errors?.validateImage && form.controls.url.dirty">Wrong image format</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <div [ngClass]="{'has-success': form.controls.title.valid && form.controls.title.dirty, 'has-error': form.controls.title.dirty && form.controls.title.errors }">
+      <input type="text" name="title" class="form-control" placeholder="*title" autocomplete="off" formControlName="title" />
+      <ul class="help-block">
+        <li *ngIf="form.controls.title.dirty && form.controls.title.errors?.required">Title required</li>
+        <li *ngIf="(form.controls.title.dirty && form.controls.title.errors?.maxlength) || (form.controls.title.dirty && form.controls.title.errors?.minlength)">Title length has to be no less than 3 but no more than 50</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <div [ngClass]="{'has-success': form.controls.description.valid && form.controls.description.dirty, 'has-error': form.controls.description.dirty && form.controls.description.errors }">
+      <textarea name="description" placeholder="*Product description" class="form-control" autocomplete="off"
+        formControlName="description"></textarea>
+      <ul class="help-block">
+        <li *ngIf="form.controls.description.dirty && form.controls.description.errors?.required">Description required</li>
+        <li *ngIf="(form.controls.description.dirty && form.controls.description.errors?.maxlength) || (form.controls.description.dirty && form.controls.description.errors?.minlength)">Description length has to be no less than 100 but no more than 2500</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price</label>
+    <div [ngClass]="{'has-success': form.controls.price.valid && form.controls.price.dirty, 'has-error': form.controls.price.dirty && form.controls.price.errors }">
+      <input type="number" name="price" placeholder="*Product price" class="form-control" autocomplete="off"
+        formControlName="price" />
+      <ul class="help-block">
+        <li *ngIf="form.controls.price.dirty && form.controls.price.errors?.required">Price required</li>
+        <li *ngIf="form.controls.price.dirty && form.controls.price.errors?.min">Price couldn't be less than 0</li>
+      </ul>
+    </div>
+  </div>
+
+  <button [disabled]="processing" type="button" name="button" (click)="goBack()" class="btn btn-warning">Back</button>
+  <button [disabled]="processing || !form.valid" type="submit" name="button" (click)="onCreateSubmit()" class="btn btn-success">Create</button>
+
+</form>

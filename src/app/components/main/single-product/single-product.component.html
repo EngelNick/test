@@ -1,0 +1,21 @@
+
+<h3 *ngIf="product" class="text-muted main">{{product_name}}</h3>
+<div>
+<a [routerLink]="['/main']"><p type="button" name="button" (click)="goMain()"><span class="glyphicon glyphicon-arrow-left"></span> Go back to the main</a>
+</div>
+<div class="col-md-10 col-md-push-1">
+  <div *ngIf="product">
+    <h4 class="featurette-heading">{{product.Title}}</h4>
+    <div class="col-xs-12">
+      <div class="col-md-7 col-sm-7 col-xs-12">
+        <p>{{product.Description}}</p>
+        <hr/>
+        <h4 class="featurette-heading">{{product.Price}}$ per kg</h4>
+      </div>
+      <div class="col-md-5 col-sm-5 col-xs-12">
+          <img [src]="product.Image" onError="this.src='../../../assets/images/placeholder.png';" width="400"
+            height="400">
+        </div>
+    </div>
+  </div>
+</div>
